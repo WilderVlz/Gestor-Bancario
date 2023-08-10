@@ -6,13 +6,12 @@ import java.util.*;
 import java.util.List;
 import servicio.ServicioCliente;
 import static datos.Conexion.*;
-import java.io.IOException;
 
 public class ClienteDaoJDBC implements ServicioCliente {
 
     private static final String SQL_SELECT = "SELECT * FROM cliente";
 
-    private static final String SQL_SELECT_BY_ID = "SELECT * FROM WHERE id_cliente=?";
+    private static final String SQL_SELECT_BY_ID = "SELECT * FROM cliente WHERE id_cliente=?";
 
     private static final String SQL_INSERT = "INSERT INTO cliente (nombre,apellido,email,telefono,saldo) VALUES (?,?,?,?,?)";
 
@@ -67,17 +66,19 @@ public class ClienteDaoJDBC implements ServicioCliente {
     }
 
     @Override
-    public Cliente encontrar(Cliente idCliente) {
+    public Cliente encontrar(Cliente clienteBuscar) {
 
         Connection conexion = null;
         PreparedStatement consulta = null;
         ResultSet resultado = null;
         Cliente cliente = null;
+        
+        int id =  clienteBuscar.getIdCliente();
 
         try {
             conexion = getConexion();
             consulta = conexion.prepareStatement(SQL_SELECT_BY_ID);
-            consulta.setInt(1, cliente.getIdCliente());
+            consulta.setInt(1, clienteBuscar.getIdCliente());
             resultado = consulta.executeQuery();
 
             if (resultado.next()) {

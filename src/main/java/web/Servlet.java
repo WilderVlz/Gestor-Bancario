@@ -46,7 +46,7 @@ public class Servlet extends HttpServlet {
         
 //        int registrosActualizados = new ClienteDaoJDBC().actualizar(clienteAEditar);
 
-        this.accionDefault(request, response);
+//        this.accionDefault(request, response);
     }
 
     private double saldoTotal(List<Cliente> lista) {
