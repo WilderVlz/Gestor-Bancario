@@ -12,21 +12,28 @@ public class Conexion {
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASS = "1234";
 
+    private static BasicDataSource dataSource;
+
     public static DataSource getData() {
 
-        BasicDataSource bd = new BasicDataSource();
+        /*correcion para evitar que se creen varios objetos de tipo connection 
+          asi optimizaremos mucho mas el performance*/
+        if (dataSource == null) {
+            dataSource = new BasicDataSource();
 
-        bd.setUrl(JDBC_URL);
-        bd.setUsername(JDBC_USER);
-        bd.setPassword(JDBC_PASS);
-        
-        bd.setInitialSize(50);
+            dataSource.setUrl(JDBC_URL);
+            dataSource.setUsername(JDBC_USER);
+            dataSource.setPassword(JDBC_PASS);
 
-        return bd;
+            dataSource.setInitialSize(50);
+
+        }
+
+        return dataSource;
 
     }
 
-    public static Connection getConexion() throws SQLException  {
+    public static Connection getConexion() throws SQLException {
 
         return getData().getConnection();
 
