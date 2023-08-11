@@ -40,7 +40,9 @@ public class Servlet extends HttpServlet {
 
         Cliente clienteAEditar = new ClienteDaoJDBC().encontrar(new Cliente(Integer.parseInt(request.getParameter("idCliente"))));
 
-        request.setAttribute("clienteEditar", clienteAEditar);
+        HttpSession session = request.getSession();
+        
+        session.setAttribute("clienteEditar", clienteAEditar);
         
         request.getRequestDispatcher("/WEB-INF/paginas/cliente/editarCliente.jsp").forward(request, response);
         
@@ -73,6 +75,11 @@ public class Servlet extends HttpServlet {
                 case "insertar":
 
                     this.insertarCliente(request, response);
+                    break;
+                    
+                case "modificar":
+                    
+                    this.modificarCliente(request, response);
                     break;
 
                 default:
@@ -126,5 +133,22 @@ public class Servlet extends HttpServlet {
         //este metodo si notifica al navegador, por lo tanto tambien cambiará la url
         response.sendRedirect("clientes.jsp");
 
+    }
+
+    private void modificarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        Cliente clienteActualizado = new Cliente(
+        Integer.parseInt(request.getParameter("idCliente")),
+        request.getParameter("nombre"),
+        request.getParameter("apellido"),
+        request.getParameter("email"),
+        request.getParameter("telefono"),
+        Double.parseDouble(request.getParameter("saldo")));
+        
+        int registrosActualizados = new ClienteDaoJDBC().actualizar(clienteActualizado);
+        System.out.println("registrosActualizados = " + registrosActualizados);
+        
+        this.accionDefault(request, response);
+        
     }
 }

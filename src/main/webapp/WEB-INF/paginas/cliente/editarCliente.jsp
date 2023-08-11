@@ -57,9 +57,6 @@
                                         <input type="number" class="form-control" name="saldo" required="" value="${clienteEditar.saldo}" step="any" >
 
                                     </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-primary" type="submit">Guardar</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>

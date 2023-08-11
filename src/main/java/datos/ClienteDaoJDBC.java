@@ -84,6 +84,7 @@ public class ClienteDaoJDBC implements ServicioCliente {
             if (resultado.next()) {
 
                 cliente = new Cliente(
+                        resultado.getInt(1),
                         resultado.getString(2),
                         resultado.getString(3),
                         resultado.getString(4),
