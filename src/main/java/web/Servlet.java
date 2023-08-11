@@ -25,6 +25,10 @@ public class Servlet extends HttpServlet {
 
                     this.editarCliente(request, response);
                     break;
+                    
+                case "eliminar":
+                    this.eliminarCliente(request, response);
+                    break;
 
                 default:
 
@@ -147,6 +151,15 @@ public class Servlet extends HttpServlet {
         
         int registrosActualizados = new ClienteDaoJDBC().actualizar(clienteActualizado);
         System.out.println("registrosActualizados = " + registrosActualizados);
+        
+        this.accionDefault(request, response);
+        
+    }
+
+    private void eliminarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        int registrosEliminados = new ClienteDaoJDBC().eliminar(new Cliente(Integer.parseInt(request.getParameter("idCliente"))));
+        System.out.println("registrosEliminados = " + registrosEliminados);
         
         this.accionDefault(request, response);
         
